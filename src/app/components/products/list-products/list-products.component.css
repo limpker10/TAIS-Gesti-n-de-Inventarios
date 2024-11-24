@@ -13,7 +13,17 @@
     background-color: transparent !important;
   }
 
-  table {
+  .table-container {
     width: 100%;
+    overflow-x: auto; /* Habilitar scroll horizontal para dispositivos pequeños */
   }
-  
+
+  .mat-cell, .mat-header-cell {
+    word-wrap: break-word; /* Ajusta el texto si es demasiado largo */
+    white-space: nowrap; /* Opcional: evita que el texto se divida en varias líneas */
+    text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
+    overflow: hidden;
+  }
+  .mat-column-Description {
+    width: 28% !important;
+  }

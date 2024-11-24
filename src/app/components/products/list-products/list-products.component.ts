@@ -17,7 +17,7 @@ export class ListProductsComponent {
 
   cargando: boolean = true;
 
-  displayedColumns: string[] = ['ProductID', 'Code', 'Name', 'Price', 'Category', 'Description','Actions'];
+  displayedColumns: string[] = ['Code', 'Name', 'Price', 'Category', 'Description','Cantidad'];
   products: Product[] = [];
 
   constructor(private productService:ProductsService) {}

@@ -2,3 +2,16 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snackbar-error {
+    --mdc-snackbar-container-color: rgb(51, 13, 13) !important;
+    --mdc-snackbar-supporting-text-color: rgb(249, 249, 249) !important;
+}
+.snackbar-success {
+    --mdc-snackbar-container-color: rgb(13, 53, 67) !important;
+    --mdc-snackbar-supporting-text-color: rgb(249, 249, 249) !important;
+}
+.snackbar-info {
+    --mdc-snackbar-container-color: rgb(12, 37, 87) !important;
+    --mdc-snackbar-supporting-text-color: rgb(249, 249, 249) !important;
+}
