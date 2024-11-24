@@ -1,0 +1,19 @@
+/* Estilo para eliminar la sombra */
+.no-elevation {
+    box-shadow: none !important;
+  }
+  
+  /* Opcional: estilos para eliminar hover o focos */
+  .no-elevation:hover {
+    background-color: transparent !important;
+  }
+  
+  .no-elevation:focus {
+    outline: none !important;
+    background-color: transparent !important;
+  }
+
+  table {
+    width: 100%;
+  }
+  

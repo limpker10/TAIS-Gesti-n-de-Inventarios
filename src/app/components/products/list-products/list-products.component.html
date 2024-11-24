@@ -1,0 +1,75 @@
+<nav aria-label="breadcrumb" style="background: #32a5df24;" class="p-3 rounded mb-3">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+            <a href="#" class=" text-decoration-none">Productos</a>
+        </li>
+        <li class="breadcrumb-item active">
+            <a>Lista Productos</a>
+        </li>
+
+    </ol>
+</nav>
+<div class="d-flex justify-content-end">
+    <button mat-stroked-button [routerLink]="['/products/add']">
+        Agregar Producto
+    </button>
+</div>
+
+@if (cargando) {
+<div class="d-flex justify-content-center">
+
+    <mat-spinner class="spinner"></mat-spinner>
+</div>
+}@else {
+
+    <div class="table-container" >
+        <table mat-table [dataSource]="products" >
+          <!-- Columnas -->
+          <ng-container matColumnDef="ProductID">
+            <th mat-header-cell *matHeaderCellDef> Product ID </th>
+            <td mat-cell *matCellDef="let product"> {{ product.ProductID }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Code">
+            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <td mat-cell *matCellDef="let product"> {{ product.Code }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let product"> {{ product.Name }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let product"> {{ product.Price }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Category">
+            <th mat-header-cell *matHeaderCellDef> Category </th>
+            <td mat-cell *matCellDef="let product"> {{ product.Category }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let product"> {{ product.Description }} </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+    <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let product">
+          <button mat-icon-button color="primary" (click)="editProduct(product)">
+            <mat-icon>edit</mat-icon>
+        </button>
+          <button mat-icon-button color="warn" (click)="deleteProduct(product)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        </td>
+      </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+}
