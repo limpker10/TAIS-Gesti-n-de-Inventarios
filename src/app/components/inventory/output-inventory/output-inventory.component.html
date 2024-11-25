@@ -1,0 +1,129 @@
+<nav aria-label="breadcrumb" style="background: #39b3f024;" class="p-3 rounded">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/']" class=" text-decoration-none">Productos</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/products/']" class="text-decoration-none">Lista Productos</a>
+        </li>
+        <li class="breadcrumb-item active " aria-current="page">
+            Agregar Producto
+        </li>
+    </ol>
+</nav>
+
+
+<div class="mt-4">
+    <div class="card">
+        <div class="card-body">
+
+
+            <!-- Formulario de movimiento -->
+            <form [formGroup]="movimientoForm" class="row g-3" (ngSubmit)="onSubmit()">
+
+                <div class="col-lg-6">
+
+                    <mat-form-field class="w-100">
+                        <mat-label>Tipo de Operación</mat-label>
+                        <mat-select formControlName="tipo_operacion">
+                            <mat-option value="INGRESO">Ingreso</mat-option>
+                            <mat-option value="EGRESO">Egreso</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <mat-form-field class="w-100">
+                        <mat-label>Fecha Movimiento</mat-label>
+                        <input matInput type="date" formControlName="fecha_movimiento" >
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-12">
+
+                    <mat-form-field class="w-100">
+                        <mat-label>Nota</mat-label>
+                        <textarea matInput formControlName="nota" placeholder="Ingresa una nota opcional"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <button mat-flat-button color="primary" type="submit">Enviar Movimiento</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form>
+                <div class="form-container">
+                    <mat-form-field class="input-field">
+                        <mat-label>Buscar producto</mat-label>
+                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            @for (option of filteredOptions| async; track option) {
+
+                            <mat-option [value]="option">
+                                {{ option.nombre }}
+                            </mat-option>
+                            }
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" (click)="addToTable()" class="add-button">Agregar</button>
+                </div>
+            </form>
+
+            <table mat-table [dataSource]="tableData">
+                <!-- Producto ID Column -->
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef>codigo</th>
+                    <td mat-cell *matCellDef="let element">{{ element.codigo }}</td>
+                </ng-container>
+
+                <!-- Nombre Column -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+                </ng-container>
+
+                <!-- Cantidad Column -->
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="number" min="1" [(ngModel)]="element.cantidad" (input)="updateTotal(element)" >
+                        @if (element.cantidad < 1) {
+                            
+                            <mat-error>Cantidad debe ser mayor a 0</mat-error>
+                        }
+                    </td>
+                </ng-container>
+
+                <!-- Precio Unitario Column -->
+                <ng-container matColumnDef="precio_unitario">
+                    <th mat-header-cell *matHeaderCellDef>Precio Unitario</th>
+                    <td mat-cell *matCellDef="let element">S/ {{ element.precio_unitario }}</td>
+                </ng-container>
+
+                <!-- Total Column -->
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef>Total</th>
+                    <td mat-cell *matCellDef="let element">S/ {{ element.total  }}</td>
+                </ng-container>
+
+                <!-- Acciones Column -->
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="warn" (click)="removeFromTable(element)" matTooltip="Eliminar Producto">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
