@@ -25,7 +25,8 @@ export class AppComponent {
     // Detecta la ruta activa al iniciar
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const index = this.tabs.findIndex((tab) => tab.path === event.urlAfterRedirects);
+        // Busca la pestaña activa basada en coincidencias parciales de rutas
+        const index = this.tabs.findIndex((tab) => event.urlAfterRedirects.startsWith(tab.path));
         this.selectedIndex = index !== -1 ? index : 0;
       }
     });
