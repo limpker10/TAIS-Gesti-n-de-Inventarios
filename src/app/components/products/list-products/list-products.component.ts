@@ -1,52 +1,72 @@
-import { Component } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { Product } from '../interfaces/IProducts';
+import { Product, ProductPagination } from '../interfaces/IProducts';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 @Component({
   selector: 'app-list-products',
   standalone: true,
-  imports: [MatTableModule,MatButtonModule,MatIconModule,RouterLink,MatProgressSpinnerModule],
+  imports: [MatTableModule,MatButtonModule,MatIconModule,RouterLink,MatProgressSpinnerModule,MatSortModule,MatPaginatorModule],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.css'
 })
-export class ListProductsComponent {
+export class ListProductsComponent implements OnInit, AfterViewInit {
 
-  cargando: boolean = true;
+  // Columnas de la tabla
+  displayedColumns: string[] = ['codigo', 'nombre', 'precio_unitario', 'descripcion', 'cantidad'];
 
-  displayedColumns: string[] = ['Code', 'Name', 'Price', 'Category', 'Description','Cantidad'];
-  products: Product[] = [];
+  // Fuente de datos de la tabla
+  dataSource = new MatTableDataSource<Product>();
 
-  constructor(private productService:ProductsService) {}
+  isLoading: boolean = true;
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(
+    private productService: ProductsService,
+  ) {}
+
+  
   ngOnInit(): void {
-    this.loadProductos();
+    this.loadProducts();
   }
 
-  loadProductos(){
+  
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  
+ 
+  private loadProducts(): void {
+    this.isLoading = true;
+
+    // Llama al servicio para obtener la lista de productos
     this.productService.getProducts().subscribe({
-      next: (data) => {
-        // Mapear datos recibidos al formato de la interfaz Product
-        this.products = data.products;
-        this.cargando = false;
+      next: (response) => {
+        console.log('Respuesta de productos:', response);
+
+        // Actualiza los datos de la tabla
+        this.dataSource.data = response.products;
+
+        // Detiene el indicador de carga
+        this.isLoading = false;
+
       },
       error: (error) => {
         console.error('Error al cargar los productos:', error);
-        this.cargando = false;
+        this.isLoading = false;
       },
     });
   }
-  
-  editProduct(id: number): void {
-    console.log('Edit product with ID:', id);
-    // Lógica para editar producto
-  }
 
-  deleteProduct(id: number): void {
-    console.log('Delete product with ID:', id);
-    // Lógica para eliminar producto
-  }
+  
+  
 }

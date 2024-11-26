@@ -7,6 +7,16 @@ export interface Product {
   Name: string;
   Cantidad:number
 }
+export interface ProductPagination {
+  // ProductID: string;
+  codigo: string;
+  precio_unitario: number;
+  descripcion: string;
+  categorias: string;
+  nombre: string;
+  cantidad:number
+}
+
 
 export interface CreateProduct {
   nombre: string;
