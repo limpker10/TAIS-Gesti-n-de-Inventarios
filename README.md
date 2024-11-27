@@ -1,27 +1,37 @@
-# AngularGestionInvestarios
+# Sistema de Gestión de Inventarios 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+A continuación, se presentan los recursos relacionados con la documentación, pruebas y arquitectura del sistema.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🎥 Video de Explicación de la Implementación  
+Este video detalla los aspectos más importantes de la implementación técnica de la solución, la arquitectura, la implementación técnica, las pruebas y la funcionalidad del sistema
+👉 [Video de Explicación](https://drive.google.com/drive/folders/1hq-hqpPYIqEeMLRx1H7N-bgjHKIo4Lsp?usp=drive_link)  
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 📄 Manual de Usuario  
+El manual de usuario proporciona instrucciones detalladas sobre cómo utilizar cada funcionalidad del sistema, incluyendo cómo gestionar productos, registrar movimientos de inventario y generar reportes.  
+👉 [Manual de Usuario](https://docs.google.com/document/d/1d4sYj5LIs4-3NmxMpAYzaBwLP8QZUodJY94tgDjoUCA/edit?tab=t.0)  
 
-## Build
+---
+## 🧪 Pruebas del Sistema  
+En esta carpeta encontrarás los casos de prueba diseñados y sus resultados documentados, incluyendo:  
+- Casos de prueba funcionales.  
+- Pruebas de validación y de rendimiento.  
+- Scripts automatizados para ejecutar pruebas con Postman.  
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+👉 [Carpeta de Pruebas](https://drive.google.com/drive/folders/1TRD8Bdt7tN3W8gxE8HLB-D8_jUDrraoY)  
+---
 
-## Running unit tests
+## 🛠️ Diagrama de Arquitectura  
+Este diagrama ilustra la estructura general del sistema, mostrando la interacción entre los componentes principales como la base de datos, backend, frontend y servicios externos.  
+👉 [Diagrama de Arquitectura](https://drive.google.com/file/d/1Tbo9n0aYAhGFCNK92bzGw8emNbTxydBE/view?usp=sharing)  
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## 🎨 Documentación de Interfaces  
+Incluye los wireframes y diseños de las interfaces de usuario. Este documento detalla cómo está organizada la navegación del sistema, los campos de cada pantalla y el diseño responsivo para diferentes dispositivos.  
+👉 [Documentación de Interfaces](https://docs.google.com/document/d/11giIo_U6jyrsKTfb_y0hHVAfgwONisatC58HwrSr2RY/edit?usp=sharing)  
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
