@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +23,11 @@ import { ProductsService } from '../../products/services/products.service';
 import { InventoryService } from '../../products/services/inventory/inventory.service';
 import { SnackbarService } from '../../products/services/snackbar/snackbar.service';
 
+export interface ClienteProveedor {
+  tipo_usuario: 'CLIENTE' | 'PROVEEDOR'; // Limita a los valores posibles
+  usuario_id: string; // Identificador del usuario
+}
+
 export interface Producto {
   codigo: string;
   nombre: string;
@@ -31,11 +36,31 @@ export interface Producto {
   total: number;
 }
 
+export interface ProductoOutput {
+  codigo: string;
+  nombre: string;
+  cantidad: number;
+  precio_unitario: number;
+  precio_venta: number; // Nuevo atributo
+  total: number;
+}
+
 export interface Movimiento {
   tipo_operacion: string;
   fecha_movimiento: string;
   nota?: string;
   detalle_productos: Producto[];
+  tipo_documento: string;
+  cliente_provedor: any;
+}
+
+export interface MovimientoOutput {
+  tipo_operacion: string;
+  fecha_movimiento: string;
+  nota?: string;
+  detalle_productos: ProductoOutput[];
+  tipo_documento: string;
+  cliente_provedor: any;
 }
 
 @Component({
@@ -60,28 +85,45 @@ export interface Movimiento {
 })
 export class OutputInventoryComponent {
   // emailFormControl = new FormControl('', [Validators.required, Validators.min(1)]);
-  myControl = new FormControl<string | Producto>('');
-  options: Producto[] = [];
-  filteredOptions!: Observable<Producto[]>;
+  myControl = new FormControl<string | ProductoOutput>('');
+  options: ProductoOutput[] = [];
+  filteredOptions!: Observable<ProductoOutput[]>;
+  selectedUser:any;
 
-  tableData: Producto[] = [];
+  tableData: ProductoOutput[] = [];
   displayedColumns: string[] = [
     'codigo',
     'nombre',
     'cantidad',
     'precio_unitario',
+    'precio_venta',
     'total',
     'acciones',
+  ];
+
+  documentTypes: string[] = [
+    'FACTURA_VENTA',
+    'ORDEN_SALIDA',
+    'NOTA_ENVIO',
+    'GUIA_REMITO',
+    'NOTA_TRANSFERENCIA',
+  ];
+
+  users = [
+    // { tipo_usuario: 'PROVEEDOR', usuario_id: 'P-MAU-123456', estado: true, nombre: 'Mauricio Piero' },
+    { tipo_usuario: 'CLIENTE', usuario_id: 'C-JUA-123456', estado: true, nombre: 'Juan Carlos' },
   ];
 
   constructor(private productsService: ProductsService, private inventoryService:InventoryService, private snackBarService:SnackbarService) {}
   // Formulario para el movimiento
   movimientoForm = new FormGroup({
-    tipo_operacion: new FormControl('INGRESO', [Validators.required]),
+    tipo_operacion: new FormControl('SALIDA', [Validators.required]),
     fecha_movimiento: new FormControl(
       { value: new Date().toISOString().substring(0, 10), disabled: true },
       [Validators.required]
     ),
+    tipo_documento: new FormControl('', [Validators.required]),
+    cliente_provedor: new FormControl(null, [Validators.required]),
     nota: new FormControl(''),
   });
 
@@ -103,16 +145,17 @@ export class OutputInventoryComponent {
         nombre: product.Name,
         cantidad: 0, // Inicializar cantidad
         precio_unitario: product.Price,
+        precio_venta: product.Price, // Inicializa el precio de venta igual al precio unitario
         total: 0, // Inicializar total
       }));
     });
   }
 
-  displayFn(producto: Producto): string {
+  displayFn(producto: ProductoOutput): string {
     return producto && producto.nombre ? producto.nombre : '';
   }
 
-  private _filter(nombre: string): Producto[] {
+  private _filter(nombre: string): ProductoOutput[] {
     const filterValue = nombre.toLowerCase();
     return this.options.filter((option) =>
       option.nombre.toLowerCase().includes(filterValue)
@@ -140,12 +183,12 @@ export class OutputInventoryComponent {
     }
   }
 
-  removeFromTable(producto: Producto) {
+  removeFromTable(producto: ProductoOutput) {
     this.tableData = this.tableData.filter((p) => p !== producto);
   }
 
-  updateTotal(producto: Producto) {
-    producto.total = producto.cantidad * producto.precio_unitario;
+  updateTotal(producto: ProductoOutput) {
+    producto.total = producto.cantidad * producto.precio_venta; // Calcular total basado en precio de venta
   }
 
   onSubmit() {
@@ -166,12 +209,15 @@ export class OutputInventoryComponent {
         alert('Todos los productos deben tener una cantidad válida mayor a 0.');
         return;
       }
+      
 
-      const movimiento: Movimiento = {
+      const movimiento: MovimientoOutput = {
         tipo_operacion: this.movimientoForm.get('tipo_operacion')?.value as 'INGRESO' | 'EGRESO', // Garantiza el tipo
         fecha_movimiento: this.movimientoForm.get('fecha_movimiento')?.value ?? '', // Proporciona un valor por defecto en caso de null
         nota: this.movimientoForm.get('nota')?.value || '', // Valor por defecto si no hay nota
         detalle_productos: this.tableData, // La tabla de productos
+        tipo_documento: this.movimientoForm.get('tipo_documento')?.value ?? '',
+        cliente_provedor: this.movimientoForm.get('cliente_provedor')?.value ?? '',
       };
 
       console.log('Formulario enviado:', movimiento);
@@ -185,8 +231,9 @@ export class OutputInventoryComponent {
           );
         },
         error: (error) => {
+          console.log(error)
           this.snackBarService.showCustom(
-            "Error al crear producto'",
+            `Error al realizar movimiento de salida' ${error.error.message}`,
             3000,
             'error'
           );
@@ -203,5 +250,10 @@ export class OutputInventoryComponent {
     } else {
       console.error('Formulario inválido');
     }
+  }
+
+  onClienteProveedorChange(event: MatSelectChange): void {
+    const selectedUser = event.value; // Aquí se obtiene el objeto seleccionado
+    console.log('Usuario seleccionado:', selectedUser);
   }
 }

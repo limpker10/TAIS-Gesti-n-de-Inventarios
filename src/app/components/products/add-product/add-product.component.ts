@@ -14,6 +14,8 @@ import { RouterLink } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { SnackbarService } from '../services/snackbar/snackbar.service';
 import { CreateProduct } from '../interfaces/IProducts';
+import { CategoriasService } from '../services/categorias/categorias.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-add-product',
   standalone: true,
@@ -25,20 +27,23 @@ import { CreateProduct } from '../interfaces/IProducts';
     MatSelectModule,
     MatButtonModule,
     RouterLink,
+    MatProgressSpinnerModule
   ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
 })
 export class AddProductComponent {
-  
+  cargando: boolean = false;
+
   productForm: FormGroup;
 
-  categories: string[] = ['Electrónica', 'Ropa', 'Hogar', 'Deportes'];
+  categorias: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private productsService: ProductsService,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    private categoriaSerive: CategoriasService
   ) {
     this.productForm = this.fb.group({
       // code: ['', [Validators.required]],
@@ -46,12 +51,16 @@ export class AddProductComponent {
       description: [''],
       quantity: [1, [Validators.required, Validators.min(0)]],
       unitPrice: [1, [Validators.required, Validators.min(0.10)]],
-      category: ['', [Validators.required]],
+      category: ['', Validators.required]
     });
+  }
+  ngOnInit(): void {
+    this.loadCategorias();
   }
 
   onSubmit() {
     if (this.productForm.valid) {
+      this.cargando=true;
       // const newProduct = this.productForm.value;
       const newProduct: CreateProduct = {
         nombre: this.productForm.value.name,
@@ -79,11 +88,19 @@ export class AddProductComponent {
           // console.error('Error al crear producto:', error);
         },
       });
+      this.cargando=false;
       this.onClear();
       // console.log('Producto registrado:', newProduct);
     } else {
       console.log('Formulario inválido');
     }
+  }
+
+  loadCategorias(): void {
+    this.categoriaSerive.getCategorias().subscribe(data => {
+      console.log(data)
+      this.categorias = data;
+    });
   }
 
   onClear() {

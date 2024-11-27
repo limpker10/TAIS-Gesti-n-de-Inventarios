@@ -1,0 +1,81 @@
+/* Estilo para eliminar la sombra */
+.no-elevation {
+    box-shadow: none !important;
+  }
+  
+  /* Opcional: estilos para eliminar hover o focos */
+  .no-elevation:hover {
+    background-color: transparent !important;
+  }
+  
+  .no-elevation:focus {
+    outline: none !important;
+    background-color: transparent !important;
+  }
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto; /* Habilitar scroll horizontal para dispositivos pequeños */
+  }
+
+  .mat-cell, .mat-header-cell {
+    word-wrap: break-word; /* Ajusta el texto si es demasiado largo */
+    white-space: nowrap; /* Opcional: evita que el texto se divida en varias líneas */
+    text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
+    overflow: hidden;
+  }
+  .mat-column-Description {
+    width: 28% !important;
+  }
+
+/* Structure */
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  width: 64px;
+}
+
+.mat-column-created {
+  width: 124px;
+}
+
+.mat-header-row,
+.mat-header-cell {
+  position: sticky;
+  top: 0; /* Posición fija en la parte superior */
+  z-index: 1;
+  background: #ffffff; /* Fondo blanco para encabezados */
+}

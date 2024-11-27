@@ -13,25 +13,21 @@
 </nav>
 
 
+@if (cargando) {
+  <div class="d-flex justify-content-center">
+  
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+  }@else {
+  
 <div class="container mt-4">
+
+  
+
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="row g-3">
     <!-- Código -->
 
-    <!-- <div class="col-lg-3">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Código</mat-label>
-        <input matInput formControlName="code" />
-        @if (productForm.get('code')?.hasError('required')) {
-
-        <mat-error>Código es obligatorio</mat-error>
-        }
-        @if (productForm.get('code')?.hasError('duplicate')) {
-
-        <mat-error>El código ya existe</mat-error>
-        }
-      </mat-form-field>
-    </div> -->
-
+    
     <!-- Cantidad -->
     <div class="col-lg-4">
       <mat-form-field appearance="outline" class="w-100">
@@ -71,10 +67,10 @@
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Categoría</mat-label>
         <mat-select formControlName="category">
-          @for (category of categories; track $index) {
+          @for (category of categorias; track $index) {
 
-            <mat-option [value]="category">
-              {{ category }}
+            <mat-option [value]="category.CategoriaID">
+              {{ category.Nombre }}
             </mat-option>
           }
         </mat-select>
@@ -121,3 +117,5 @@
     <!-- Botón de Enviar -->
   </form>
 </div>
+
+}

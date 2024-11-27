@@ -9,16 +9,14 @@
 
   </ol>
 </nav>
-<div class="d-flex justify-content-end">
-  <button mat-stroked-button [routerLink]="['/inventory/output']">
+<div class="d-flex justify-content-end g-3">
+  <button mat-stroked-button [routerLink]="['/inventory/input']">
     Entrada Inventario
   </button>
   <button mat-flat-button color="accent" [routerLink]="['/inventory/output/']">
     Salida Inventario
   </button>
-  <button mat-flat-button color="accent" [routerLink]="['/inventory/reportes/']">
-    reportes Inventario
-  </button>
+  
 </div>
 
 @if (cargando) {
@@ -28,24 +26,24 @@
 </div>
 }@else {
 
-<div class="table-container">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div class="example-table-container">
+  <table mat-table [dataSource]="dataSource" matSort>
 
     <!-- Documento Movimiento -->
     <ng-container matColumnDef="documento_movimiento">
-      <th mat-header-cell *matHeaderCellDef>Documento</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
       <td mat-cell *matCellDef="let element">{{ element.documento_movimiento }}</td>
     </ng-container>
 
     <!-- Tipo Operación -->
     <ng-container matColumnDef="tipo_operacion">
-      <th mat-header-cell *matHeaderCellDef>Operación</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Operación</th>
       <td mat-cell *matCellDef="let element">{{ element.tipo_operacion }}</td>
     </ng-container>
 
     <!-- Detalle Productos -->
     <ng-container matColumnDef="detalle_productos">
-      <th mat-header-cell *matHeaderCellDef>Detalle Productos</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Detalle Productos</th>
       <td mat-cell *matCellDef="let element">
         {{ formatProductDetails(element.detalle_productos) }}
       </td>
@@ -53,19 +51,19 @@
 
     <!-- Fecha Movimiento -->
     <ng-container matColumnDef="fecha_movimiento">
-      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
       <td mat-cell *matCellDef="let element">{{ element.fecha_movimiento }}</td>
     </ng-container>
 
     <!-- Nota -->
     <ng-container matColumnDef="nota">
-      <th mat-header-cell *matHeaderCellDef>Nota</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nota</th>
       <td mat-cell *matCellDef="let element">{{ element.nota }}</td>
     </ng-container>
 
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="generatePDF(element)">
           <mat-icon>picture_as_pdf</mat-icon>
@@ -79,4 +77,8 @@
   </table>
 
 </div>
+<mat-paginator
+  [pageSizeOptions]="[10, 20, 30]"
+  >
+</mat-paginator>
 }
