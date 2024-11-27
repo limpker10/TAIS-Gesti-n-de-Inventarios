@@ -1,16 +1,17 @@
 <nav aria-label="breadcrumb" style="background: #39b3f024;" class="p-3 rounded">
     <ol class="breadcrumb mb-0">
         <li class="breadcrumb-item">
-            <a [routerLink]="['/']" class=" text-decoration-none">Productos</a>
+            <a [routerLink]="['/inventory/']" class=" text-decoration-none">Inventario</a>
         </li>
         <li class="breadcrumb-item">
-            <a [routerLink]="['/products/']" class="text-decoration-none">Lista Productos</a>
+            <a [routerLink]="['/inventory/']" class="text-decoration-none">Operaciones del Inventario</a>
         </li>
         <li class="breadcrumb-item active " aria-current="page">
-            Agregar Producto
+            Entrada de Productos
         </li>
     </ol>
 </nav>
+
 
 
 <div class="mt-4">
@@ -21,7 +22,7 @@
             <!-- Formulario de movimiento -->
             <form [formGroup]="movimientoForm" class="row g-3" (ngSubmit)="onSubmit()">
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
 
                     <mat-form-field appearance="outline" class="w-100" >
                         <mat-label>Tipo de Operación</mat-label>
@@ -34,7 +35,7 @@
                   
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Tipo de Documento</mat-label>
                         <mat-select formControlName="tipo_documento" required>
@@ -54,7 +55,7 @@
                       </mat-form-field>
                 </div>
                 <!-- Cliente proveedor -->
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Cliente</mat-label>
                         <mat-select formControlName="cliente_provedor" (selectionChange)="onClienteProveedorChange($event)" required>
@@ -74,7 +75,7 @@
                       </mat-form-field>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Fecha Movimiento</mat-label>
@@ -99,7 +100,7 @@
         <div class="card-body">
             <form>
                 <div class="form-container">
-                    <mat-form-field appearance="outline" class="input-field">
+                    <mat-form-field appearance="outline" class="input-field" >
                         <mat-label>Buscar producto</mat-label>
                         <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">

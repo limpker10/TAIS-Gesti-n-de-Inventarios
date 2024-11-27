@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +17,7 @@ import { ProductsService } from '../services/products.service';
 import { SnackbarService } from '../services/snackbar/snackbar.service';
 import { CreateProduct } from '../interfaces/IProducts';
 import { CategoriasService } from '../services/categorias/categorias.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-add-product',
   standalone: true,
@@ -27,7 +29,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatSelectModule,
     MatButtonModule,
     RouterLink,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
@@ -45,14 +47,20 @@ export class AddProductComponent {
     private snackBarService: SnackbarService,
     private categoriaSerive: CategoriasService
   ) {
-    this.productForm = this.fb.group({
-      // code: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      description: [''],
-      quantity: [1, [Validators.required, Validators.min(0)]],
-      unitPrice: [1, [Validators.required, Validators.min(0.10)]],
-      category: ['', Validators.required]
-    });
+    this.productForm = this.fb.group(
+      {
+        // code: ['', [Validators.required]],
+        name: ['', [Validators.required]],
+        description: [''],
+        quantity: [1, [Validators.required, Validators.min(0)]],
+        unitPrice: [1, [Validators.required, Validators.min(0.1)]],
+        category: ['', Validators.required],
+        precio_venta: ['', [Validators.required, Validators.min(0.1)]],
+      },
+      {
+        validators: [this.precioVentaMayorQueUnitPrice],
+      }
+    );
   }
   ngOnInit(): void {
     this.loadCategorias();
@@ -60,7 +68,7 @@ export class AddProductComponent {
 
   onSubmit() {
     if (this.productForm.valid) {
-      this.cargando=true;
+      this.cargando = true;
       // const newProduct = this.productForm.value;
       const newProduct: CreateProduct = {
         nombre: this.productForm.value.name,
@@ -68,6 +76,7 @@ export class AddProductComponent {
         categorias: this.productForm.value.category,
         descripcion: this.productForm.value.description || '',
         precio_unitario: this.productForm.value.unitPrice,
+        precio_venta: this.productForm.value.precio_venta,
       };
       // Lógica para registrar el producto, verificando duplicados
       this.productsService.createProduct(newProduct).subscribe({
@@ -81,14 +90,14 @@ export class AddProductComponent {
         },
         error: (error) => {
           this.snackBarService.showCustom(
-            "Error al crear producto'",
+            `Error al crear producto' ${error.error.message}`,
             3000,
             'error'
           );
           // console.error('Error al crear producto:', error);
         },
       });
-      this.cargando=false;
+      this.cargando = false;
       this.onClear();
       // console.log('Producto registrado:', newProduct);
     } else {
@@ -97,14 +106,13 @@ export class AddProductComponent {
   }
 
   loadCategorias(): void {
-    this.categoriaSerive.getCategorias().subscribe(data => {
-      console.log(data)
+    this.categoriaSerive.getCategorias().subscribe((data) => {
+      console.log(data);
       this.categorias = data;
     });
   }
 
   onClear() {
-    
     this.productForm.reset({
       name: '',
       description: '',
@@ -112,6 +120,15 @@ export class AddProductComponent {
       unitPrice: 1,
       category: '',
     });
-    
+  }
+
+  // Custom Validator
+  precioVentaMayorQueUnitPrice(formGroup: FormGroup) {
+    const unitPrice = formGroup.get('unitPrice')?.value;
+    const precioVenta = formGroup.get('precio_venta')?.value;
+
+    return precioVenta >= unitPrice
+      ? null
+      : { precioVentaMenorQueUnitPrice: true };
   }
 }

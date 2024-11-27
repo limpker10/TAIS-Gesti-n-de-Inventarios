@@ -24,4 +24,5 @@ export interface CreateProduct {
   categorias: string;
   descripcion: string;
   precio_unitario: number;
+  precio_venta: number;
 }
