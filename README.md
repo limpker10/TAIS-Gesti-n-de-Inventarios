@@ -9,6 +9,13 @@ Este video detalla los aspectos más importantes de la implementación técnica 
 👉 [Video de Explicación](https://drive.google.com/drive/folders/1hq-hqpPYIqEeMLRx1H7N-bgjHKIo4Lsp?usp=drive_link)  
 
 ---
+### 🌐 Demo Funcional del Sistema  
+
+Aquí puedes acceder al demo funcional del sistema para explorar sus características principales en tiempo real. Este enlace proporciona acceso al entorno operativo donde se implementa la solución.  
+
+👉 [Demo Funcional](http://taisbucket.s3-website.us-east-2.amazonaws.com)  
+
+___
 
 ## 📄 Manual de Usuario  
 El manual de usuario proporciona instrucciones detalladas sobre cómo utilizar cada funcionalidad del sistema, incluyendo cómo gestionar productos, registrar movimientos de inventario y generar reportes.  
