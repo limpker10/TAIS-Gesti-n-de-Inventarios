@@ -5,6 +5,8 @@ import { AddProductComponent } from './components/products/add-product/add-produ
 import { UpdateInventoryComponent } from './components/inventory/update-inventory/update-inventory.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 import { ProductsComponent } from './components/products/products.component';
+import { EntryInventoryComponent } from './components/inventory/entry -inventory/entry-inventory.component';
+
 
 export const routes: Routes = [
   {
@@ -32,6 +34,11 @@ export const routes: Routes = [
   {
     path: 'inventory',
     component: UpdateInventoryComponent, // Lista de productos
+    
+  },
+  {
+    path: 'entry',
+    component: EntryInventoryComponent, // Formulario para editar producto (si tienes un componente de edición)
   },
   {
     path: '',

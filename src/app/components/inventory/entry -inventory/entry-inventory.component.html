@@ -1,0 +1,124 @@
+<div>
+    <h1 class="text-center">Notas de Ingreso de Almacen</h1>
+    <form class="d-flex flex-column" [formGroup]="formulario"  (ngSubmit)="onSubmit()">
+        <h2>Informacion General</h2>
+        
+        <div class="d-flex align-items-center ">
+            <div class="d-flex flex-fill justify-content-center">
+                Fecha: <span>
+                    <input formControlName="fecha" type="date" >
+                </span></div>
+            <div class="d-flex align-items-center flex-fill justify-content-center">Proveedor: 
+                <span>
+                    <select formControlName="proveedores" class="form-select" id="exampleSelect">
+                    
+                    <option *ngFor="let opcion of proveedor" [value]="opcion">{{opcion}}</option>
+                   
+                    </select>
+                </span>
+            </div>
+            <div class="d-flex align-items-center flex-fill justify-content-center">Tipo de Documento: 
+                <span>
+                    <select formControlName="tipodocumento" class="form-select" id="exampleSelect">
+                    
+                    <option *ngFor="let opcion of tipo_documento" [value]="opcion">{{opcion}}</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+        <hr/>
+        <div style="height: 350px;">
+            <h2>Nueva nota de Ingreso</h2>
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Unidad</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Costo Unitario</th>
+                        <th scope="col">Total</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let registro of datos.controls">
+                        <td><input  style="width: 150px;" type="text" [value]="registro"></td>
+                        <td><input  style="width: 150px;" type="text" [value]=""></td>
+                        <td><input  style="width: 150px;" type="text" value="dsad"></td>
+                        <td><input  style="width: 150px;" type="text" value="dsad"></td>
+                        <td><input  style="width: 150px;" type="text" value="dsad"></td>
+                        <td><input  style="width: 150px;" type="text" value="dsad" ></td>
+                        <td><input  type="button" class="btn btn-danger" value="x"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <div class="d-flex flex-column" formArrayName="datos"  >
+            <h2>Listar Producto</h2>
+            <div *ngFor="let registro of datos.controls; let i = index" [formGroupName]="i">
+            <div class="d-flex" >
+                <div class="d-flex flex-fill justify-content-center">
+                    <label >Codigo: </label>
+                    <input formControlName="codigo" type="text">
+                    <!-- <select class="form-select w-50" id="exampleSelect">
+                        <option selected>Elige una opción</option>
+                        <option value="1">Factura</option>
+                        <option value="2">Boleta</option>
+                    </select> -->
+                </div>
+                <div class="d-flex flex-fill justify-content-center align-items-center">
+                    <label>Nombre: </label>
+                    <input type="text" disabled>
+                </div>
+                
+                <div class="d-flex flex-fill justify-content-center align-items-center">
+                    <label >Unidad:</label>
+                    <input formControlName="unidad" type="text">
+                </div>
+               
+            </div>
+            
+            <div class="d-flex mt-5">
+                <div class="d-flex flex-fill justify-content-center align-items-center">
+                    <label >Cantidad:</label>
+                    <input formControlName="cantidad" type="text">
+                </div>
+                <div class="d-flex flex-fill justify-content-center align-items-center">
+                    <label >Costo Unitario:</label>
+                    <input formControlName="costo" type="text">
+                </div>
+                <div class="d-flex flex-fill justify-content-center align-items-center">
+                    <label >Total:</label>
+                    <input formControlName="total" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="d-flex mt-5 justify-content-center align-items-center">
+                <button (click)="agregarRegistro()" class="btn btn-secondary">Agregar</button>
+            </div>
+            
+            
+            
+        </div>
+        <hr/>
+        <div class="d-flex flex-column justify-content-between">
+            <h2>Resumen</h2>
+            <div class="d-flex w-50 ">
+                <label class="flex-fill d-flex justify-content-center">Total de Ingreso</label>
+                <input class="flex-fill" type="text" disabled>
+                
+            </div>
+            <div class="d-flex w-50 mt-5">
+                <label class="flex-fill d-flex justify-content-center" >Observaciones</label>
+                <textarea class="flex-fill"></textarea>
+            </div>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-primary">Crear Nota de Compras</button>
+        </div>
+    </form>
+    <div></div>
+    <div></div>
+</div>
