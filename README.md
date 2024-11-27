@@ -2,6 +2,14 @@
 
 A continuación, se presentan los recursos relacionados con la documentación, pruebas y arquitectura del sistema.
 
+---
+
+## 🎥 Video de Explicación de la Implementación  
+Este video detalla los aspectos más importantes de la implementación técnica de la solución, la arquitectura, la implementación técnica, las pruebas y la funcionalidad del sistema
+👉 [Video de Explicación](https://drive.google.com/drive/folders/1hq-hqpPYIqEeMLRx1H7N-bgjHKIo4Lsp?usp=drive_link)  
+
+---
+
 ## 📄 Manual de Usuario  
 El manual de usuario proporciona instrucciones detalladas sobre cómo utilizar cada funcionalidad del sistema, incluyendo cómo gestionar productos, registrar movimientos de inventario y generar reportes.  
 👉 [Manual de Usuario](https://docs.google.com/document/d/1d4sYj5LIs4-3NmxMpAYzaBwLP8QZUodJY94tgDjoUCA/edit?tab=t.0)  
